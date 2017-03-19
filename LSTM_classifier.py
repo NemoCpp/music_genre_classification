@@ -27,9 +27,14 @@ print("starting classifer")
 
 
 model = Sequential()
-model.add(LSTM(200, input_dim = train_features.shape[2],input_length =train_features.shape[1],activation="relu"))
+#model.add(LSTM(200, input_dim = train_features.shape[2],input_length =train_features.shape[1],activation="relu"))
 # model.add(Dropout(0.5))
 # model.add(LSTM(100))
+
+model.add(LSTM(input_dim=train_features.shape[2],
+               output_dim=128, activation='sigmoid', dropout_U=0.05, dropout_W=0.05, return_sequences=True))
+model.add(LSTM(output_dim=64, activation='sigmoid', dropout_U=0.05, dropout_W=0.05, return_sequences=False))
+
 model.add(Dense(10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
 model.summary()
